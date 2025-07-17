@@ -2,11 +2,11 @@
 This repository is the official Pytorch code implementation for our paper Leveraging Spatial Invariance to Boost Adversarial Transferability.
 
 # Requirements
--python 3.9  
--torch  
--pretrainedmodels  
--numpy  
--pandas  
+-python 3.6  
+-torch 1.8.1  
+-pretrainedmodels 0.7.4  
+-numpy 1.19.5  
+-Pillow 8.4.0  
 
 # Implementation
 
