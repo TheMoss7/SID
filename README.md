@@ -1,5 +1,5 @@
 # Leveraging Spatial Invariance to Boost Adversarial Transferability
-This repository is the official Pytorch code implementation for our paper Leveraging Spatial Invariance to Boost Adversarial Transferability.
+This repository is the official Pytorch code implementation for our paper __Leveraging Spatial Invariance to Boost Adversarial Transferability__.
 
 # Requirements
 -python 3.6  
