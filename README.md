@@ -11,4 +11,4 @@ pandas
 # Implementation
 
 ## models
-Download pretrained PyTorch models here. Then put these models into ./models/
+Download pretrained PyTorch models [here](https://github.com/ylhz/tf_to_pytorch_model). Then put these models into `./models/`
