@@ -93,7 +93,7 @@ def main():
     model_names = ['tf_inception_v3', 'tf_inception_v4', 'tf_resnet_v2_50', 'tf_resnet_v2_101', 'tf_resnet_v2_152', 'tf_inc_res_v2',
                    'tf_adv_inception_v3', 'tf_ens3_adv_inc_v3', 'tf_ens4_adv_inc_v3', 'tf_ens_adv_inc_res_v2']
 
-    models_path = 'E:/themoss/adv/SSA/SSA-master/models/'
+    models_path = './models/'
     for model_name in model_names:
         verify(model_name, models_path)
         print("===================================================")
