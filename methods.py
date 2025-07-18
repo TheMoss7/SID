@@ -8,7 +8,7 @@ from torch import nn
 import random
 from dct import *
 
-"""Translation-Invariant https://arxiv.org/abs/1904.02884   TIM对梯度进行变换"""
+"""Translation-Invariant https://arxiv.org/abs/1904.02884"""
 def gkern(kernlen=15, nsig=3):
     x = np.linspace(-nsig, nsig, kernlen)
     kern1d = st.norm.pdf(x)
@@ -20,7 +20,7 @@ def gkern(kernlen=15, nsig=3):
     gaussian_kernel = torch.from_numpy(gaussian_kernel).cuda()  # tensor and cuda
     return gaussian_kernel
 
-"""Input diversity: https://arxiv.org/abs/1803.06978   DIM对图片进行变换"""
+"""Input diversity: https://arxiv.org/abs/1803.06978"""
 def DI(x, resize_rate=1.15, diversity_prob=0.5):
     assert resize_rate >= 1.0
     assert diversity_prob >= 0.0 and diversity_prob <= 1.0
