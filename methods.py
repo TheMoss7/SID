@@ -70,7 +70,7 @@ def frequency_fusion(patch, x):
     idctx = idct_2d(dctx)
     return idctx
 
-def linear_fusion(patch, x, weight=0.5):
+def linear_fusion(patch, x, omega=0.5):
     org_x = x.clone()
     _, _, patch_w, patch_h = patch.shape
     rescale_x = F.interpolate(org_x, size=[patch_w, patch_h], mode='bilinear', align_corners=False)
@@ -79,16 +79,16 @@ def linear_fusion(patch, x, weight=0.5):
     ret = rescale_flip_x * weight + patch * (1 - weight)
     return ret
 
-def block_fusion(patch, x):
-    if torch.rand(1) < 0.5:
+def block_fusion(patch, x, probabilities=0.5, omega=0.5):
+    if torch.rand(1) < probabilities:
         return patch
     else:
         if torch.rand(1) < 0.5:
             return frequency_fusion(patch, x)
         else:
-            return linear_fusion(patch, x)
+            return linear_fusion(patch, x, omega)
 
-def local_fusion(x, num_block=2):
+def local_fusion(x, num_block=2, probabilities=0.5, omega=0.5):
     batch_size, _, w, h = x.shape
     width_length, height_length = get_length(w, num_block), get_length(h, num_block)
     x_split_w = torch.split(x, width_length, dim=2)
@@ -98,7 +98,7 @@ def local_fusion(x, num_block=2):
     for strip in x_split_h_l:
         temp_list = []
         for i in range(num_block):
-            x_enh = block_fusion(strip[i], x)
+            x_enh = block_fusion(strip[i], x, probabilities, omega)
             x_enh_flip= random_flip(x_enh)
 
             temp_list.append(x_enh_flip)
