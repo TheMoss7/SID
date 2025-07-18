@@ -28,6 +28,10 @@ parser.add_argument("--max_epsilon", type=float, default=16.0, help="Maximum siz
 parser.add_argument("--batch_size", type=int, default=10, help="How many images process at one time.")
 parser.add_argument("--momentum", type=float, default=1.0, help="Momentum")
 parser.add_argument("--N", type=int, default=20, help="The number of Spectrum Transformations")
+parser.add_argument("--K", type=int, default=2, help="The number of blocks")
+parser.add_argument("--beta", type=float, default=0.1, help="The downsampling factor")
+parser.add_argument("--p", type=float, default=0.5, help="The probabilities of image block fusion")
+parser.add_argument("--omega", type=float, default=0.5, help="The weight of linear fusion")
 
 
 
@@ -66,7 +70,7 @@ def save_image(images,names,output_dir):
 
 
 
-def ours(images, gt, model, min, max, block_num=2):
+def SID(images, gt, model, min, max, block_num=2):
     momentum = opt.momentum
     num_iter = 10
     eps = opt.max_epsilon / 255.0
@@ -78,8 +82,8 @@ def ours(images, gt, model, min, max, block_num=2):
         noise = 0
         for n in range(N):
             x = V(x, requires_grad=True)
-            x_emb = local_fusion(x, block_num)
-            resize_ratio = 1 - n * 0.005
+            x_emb = local_fusion(x, opt.K, opt.p, opt.omega)
+            resize_ratio = 1 - (n * opt.beta / N)
             x_enh= multi_scale(x_emb, resize_ratio)
             output_v3 = model(x_enh)
             loss = F.cross_entropy(output_v3, gt)
@@ -120,8 +124,8 @@ def main():
         images_min = clip_by_tensor(images - (opt.max_epsilon / 255.0), 0.0, 1.0)
         images_max = clip_by_tensor(images + (opt.max_epsilon / 255.0), 0.0, 1.0)
 
-
-        direction = ours(images, gt, model, images_min, images_max)
+        direction = SID(images, gt, model, images_min, images_max)
+        
         adv_img_np = direction.cpu().numpy()
         adv_img_np = np.transpose(adv_img_np, (0, 2, 3, 1)) * 255
         save_image(adv_img_np, images_ID, opt.output_dir)
