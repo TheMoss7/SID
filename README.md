@@ -15,7 +15,7 @@ This repository is the official Pytorch code implementation for our paper __Leve
 Download pretrained PyTorch models [here](https://github.com/ylhz/tf_to_pytorch_model). Then put these models into `./models/`.
 
 ## Datase
-Please refer to [SSA](https://github.com/yuyang-long/SSA).
+Please refer to [SSA](https://github.com/yuyang-long/SSA). Then put dataset into ./dataset/.
 
 ## Generate adversarial examples
 Running `attack.py` to generate adversarial examples.
