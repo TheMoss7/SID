@@ -86,7 +86,7 @@ def verify(model_name, path):
             with torch.no_grad():
                 sum += (model(images)[0].argmax(1) != (gt+1)).detach().sum().cpu()
 
-        print(model_name + '  acu = {:.2%}'.format(sum / length))
+        print(model_name + '  attack_success_rate = {:.2%}'.format(sum / length))
 
 def main():
 
